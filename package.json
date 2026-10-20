@@ -1,0 +1,31 @@
+{
+    "name": "hackathon-offline-prep",
+    "version": "1.0.0",
+    "private": true,
+    "description": "Hackathon Environment Preparation & Zero-Friction Launch Kit",
+    "packageManager": "npm@10.9.2",
+    "scripts": {
+        "preflight": "powershell -ExecutionPolicy Bypass -File ./scripts/preflight.ps1",
+        "preflight:bash": "bash ./scripts/preflight.sh",
+        "db:up": "docker compose up -d postgres",
+        "db:down": "docker compose stop postgres",
+        "db:logs": "docker compose logs -f postgres",
+        "db:clean": "docker compose down -v"
+    },
+    "keywords": [
+        "hackathon",
+        "template",
+        "preflight",
+        "setup",
+        "npm"
+    ],
+    "author": "",
+    "license": "UNLICENSED",
+    "workspaces": [
+        "apps/*",
+        "packages/*"
+    ],
+    "allowScripts": {
+        "unrs-resolver@1.12.2": true
+    }
+}

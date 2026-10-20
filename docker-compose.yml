@@ -1,0 +1,35 @@
+# ==============================================================================
+# Local Development Database - PostgreSQL
+# ==============================================================================
+# Usage:
+#   Start database:  docker compose up -d postgres
+#   Stop database:   docker compose stop postgres
+#   View logs:       docker compose logs -f postgres
+#   Reset data:      docker compose down -v
+# ==============================================================================
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: hackathon_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-hackathon}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-localdev_only_change_me}
+      POSTGRES_DB: ${POSTGRES_DB:-hackathon}
+    ports:
+      # Bound to 127.0.0.1 only to avoid exposing DB to local network
+      # Host port 5435 avoids collisions with host PostgreSQL running on default 5432 and other project containers on 5434
+      - "127.0.0.1:${POSTGRES_PORT:-5435}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-hackathon} -d ${POSTGRES_DB:-hackathon}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+volumes:
+  postgres_data:
+    driver: local
