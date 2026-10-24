@@ -61,7 +61,7 @@ export interface RoadmapUpdate {
   id: string;
   roadmapId: string;
   industryEventId: string;
-  proposedChanges: any[];
+  proposedChanges: unknown[];
   rationale: string;
   evidenceReferences: string[];
   impactScore: number;
@@ -81,7 +81,7 @@ export interface RoadmapVersion {
   changeReason: string;
   publishedAt: string;
   triggeringEvent?: IndustryEvent;
-  snapshot: any;
+  snapshot: unknown;
 }
 
 export interface NotificationItem {
@@ -180,12 +180,12 @@ export const api = {
     request<RoadmapVersion>(`/roadmaps/${roadmapId}/versions/${versionId}`),
 
   // Industry Intelligence
-  getIndustrySources: () => request<any[]>('/industry/sources'),
+  getIndustrySources: () => request<unknown[]>('/industry/sources'),
   getIndustryEvents: (skillSlug?: string) =>
     request<IndustryEvent[]>(`/industry/events${skillSlug ? `?skill=${skillSlug}` : ''}`),
   getIndustryStatus: () => request<MonitoringStatus>('/industry/status'),
   triggerScan: () =>
-    request<{ results: any[]; totalNewEvents: number }>('/industry/scan', { method: 'POST' }),
+    request<{ results: unknown[]; totalNewEvents: number }>('/industry/scan', { method: 'POST' }),
 
   // Notifications
   getNotifications: (learnerId: string) =>
@@ -201,7 +201,7 @@ export const api = {
 
   // Lesson Completion
   completeLesson: (lessonId: string, learnerId: string) =>
-    request<any>(`/lessons/${lessonId}/complete`, {
+    request<{ completed: boolean; message: string }>(`/lessons/${lessonId}/complete`, {
       method: 'POST',
       body: JSON.stringify({ learnerId }),
     }),

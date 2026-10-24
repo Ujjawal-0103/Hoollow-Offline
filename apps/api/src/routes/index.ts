@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { healthRoutes } from './health.routes';
+import { authRoutes } from './auth.routes';
 import { learnerRoutes } from './learner.routes';
 import { roadmapRoutes } from './roadmap.routes';
 import { lessonRoutes } from './lesson.routes';
@@ -8,8 +9,11 @@ import { industryRoutes } from './industry.routes';
 
 const router = Router();
 
-// Liveness and readiness probes
+// Liveness and readiness probes (/api/health, /api/health/ready)
 router.use('/', healthRoutes);
+
+// Authentication & Session (/api/auth)
+router.use('/auth', authRoutes);
 
 // Learner profile, preferences, roadmaps, progress, daily plan, quiz attempts, and notifications (/api/learners)
 router.use('/learners', learnerRoutes);
