@@ -4,6 +4,7 @@ import { roadmapController } from '../controllers/roadmap.controller';
 import { progressController } from '../controllers/progress.controller';
 import { dailyPlanController } from '../controllers/daily-plan.controller';
 import { quizController } from '../controllers/quiz.controller';
+import { notificationController } from '../controllers/notification.controller';
 
 const router = Router();
 
@@ -30,5 +31,11 @@ router.get('/:id/quiz-attempts', quizController.getLearnerAttempts);
 
 // GET /api/learners/:id/quiz-performance - Aggregate quiz statistics and best scores
 router.get('/:id/quiz-performance', quizController.getLearnerPerformance);
+
+// Part 5: Notifications
+router.get('/:id/notifications', (req, res, next) => notificationController.getNotifications(req, res, next));
+router.patch('/:id/notifications/:notificationId/read', (req, res, next) =>
+  notificationController.markAsRead(req, res, next)
+);
 
 export const learnerRoutes = router;

@@ -13,6 +13,8 @@
         "build:web": "npm run build --workspace=web",
         "start": "npm run start --workspace=api",
         "start:api": "npm run start --workspace=api",
+        "worker:dev": "npm run worker:dev --workspace=api",
+        "worker:start": "npm run worker:start --workspace=api",
         "typecheck": "npm run typecheck --workspace=api",
         "typecheck:api": "npm run typecheck --workspace=api",
         "test": "npm run test --workspace=api",
