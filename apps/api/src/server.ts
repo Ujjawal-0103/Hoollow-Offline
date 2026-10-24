@@ -1,17 +1,28 @@
 import { app } from './app';
 import { env } from './config/env';
-import { disconnectPrisma } from './lib/prisma';
+import { disconnectPrisma, checkDatabaseConnectivity, setPrismaClient } from './lib/prisma';
+import { createMockPrismaClient } from './lib/mock-prisma';
 import http from 'http';
 
 const server = http.createServer(app);
 
-server.listen(env.PORT, () => {
+server.listen(env.PORT, async () => {
   console.log(`=================================================`);
   console.log(`  Hoollow Backend API running in ${env.NODE_ENV} mode`);
   console.log(`  Listening on: http://localhost:${env.PORT}`);
   console.log(`  Health Check: http://localhost:${env.PORT}/api/health`);
   console.log(`  Readiness:    http://localhost:${env.PORT}/api/health/ready`);
   console.log(`  CORS Origin:  ${env.FRONTEND_URL}`);
+
+  // Auto-detect PostgreSQL database status
+  const dbHealth = await checkDatabaseConnectivity();
+  if (dbHealth.connected) {
+    console.log(`  Database:     Connected to PostgreSQL`);
+  } else {
+    console.log(`  Database:     Offline (${dbHealth.message})`);
+    console.log(`  Fallback:     In-memory mock store active (zero-friction offline mode)`);
+    setPrismaClient(createMockPrismaClient() as any);
+  }
   console.log(`=================================================`);
 });
 
