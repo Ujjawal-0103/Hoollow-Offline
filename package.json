@@ -2,9 +2,22 @@
     "name": "hackathon-offline-prep",
     "version": "1.0.0",
     "private": true,
-    "description": "Hackathon Environment Preparation & Zero-Friction Launch Kit",
+    "description": "Hoollow - AI-Powered Learning Platform",
     "packageManager": "npm@10.9.2",
     "scripts": {
+        "dev": "npm run dev --workspace=api",
+        "dev:api": "npm run dev --workspace=api",
+        "dev:web": "npm run dev --workspace=web",
+        "build": "npm run build --workspace=api",
+        "build:api": "npm run build --workspace=api",
+        "build:web": "npm run build --workspace=web",
+        "start": "npm run start --workspace=api",
+        "start:api": "npm run start --workspace=api",
+        "typecheck": "npm run typecheck --workspace=api",
+        "typecheck:api": "npm run typecheck --workspace=api",
+        "test": "npm run test --workspace=api",
+        "test:api": "npm run test --workspace=api",
+        "prisma:generate": "npm run prisma:generate --workspace=api",
         "preflight": "powershell -ExecutionPolicy Bypass -File ./scripts/preflight.ps1",
         "preflight:bash": "bash ./scripts/preflight.sh",
         "db:up": "docker compose up -d postgres",
@@ -17,7 +30,8 @@
         "template",
         "preflight",
         "setup",
-        "npm"
+        "npm",
+        "hoollow"
     ],
     "author": "",
     "license": "UNLICENSED",
@@ -26,6 +40,10 @@
         "packages/*"
     ],
     "allowScripts": {
-        "unrs-resolver@1.12.2": true
+        "unrs-resolver@1.12.2": true,
+        "@prisma/client@6.19.3": true,
+        "prisma@6.19.3": true,
+        "@prisma/engines@6.19.3": true,
+        "esbuild@0.28.2": true
     }
 }
