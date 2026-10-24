@@ -30,6 +30,38 @@ const envSchema = z.object({
     .string()
     .optional()
     .transform((val) => (val && val.trim().length > 0 ? val.trim() : undefined)),
+  INDUSTRY_MONITOR_ENABLED: z
+    .string()
+    .optional()
+    .default('true')
+    .transform((val) => val === 'true' || val === '1'),
+  INDUSTRY_SCAN_INTERVAL_MINUTES: z
+    .string()
+    .optional()
+    .default('360')
+    .transform((val) => parseInt(val, 10) || 360),
+  INDUSTRY_AUTO_APPLY_LOW_RISK: z
+    .string()
+    .optional()
+    .default('false')
+    .transform((val) => val === 'true' || val === '1'),
+  INDUSTRY_AUTO_APPLY_MEDIUM_RISK: z
+    .string()
+    .optional()
+    .default('false')
+    .transform((val) => val === 'true' || val === '1'),
+  AI_API_KEY: z
+    .string()
+    .optional()
+    .transform((val) => (val && val.trim().length > 0 ? val.trim() : undefined)),
+  YOUTUBE_API_KEY: z
+    .string()
+    .optional()
+    .transform((val) => (val && val.trim().length > 0 ? val.trim() : undefined)),
+  ADMIN_API_KEY: z
+    .string()
+    .optional()
+    .transform((val) => (val && val.trim().length > 0 ? val.trim() : undefined)),
 });
 
 export type Env = z.infer<typeof envSchema>;
